@@ -2,7 +2,6 @@
 #define CIRCLE_HPP
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 /*
 	A class representing a 2D circle with basic physics.
@@ -64,8 +63,10 @@ public:
 
 	/*
 		Handle the mouse button released event.
+
+		@param momentum: The momentum of the circle after being thrown.
 	*/
-	void onMouseReleased();
+	void onMouseReleased(const sf::Vector2f& momentum);
 
 	/*
 		Handle the mouse moved event.

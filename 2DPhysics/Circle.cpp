@@ -1,3 +1,4 @@
+#include "Circle.hpp"
 #include "Constants.hpp"
 
 Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition) : circle(radius)
@@ -22,16 +23,32 @@ void Circle::update()
 {
 	if (!isDragged)
 	{
+		velocity.x *= friction;
 		velocity.y += gravitationalAcceleration;
 		position += velocity;
 
 		if (position.y + circle.getRadius() * 2 >= WINDOW_HEIGHT)
 		{
 			position.y = WINDOW_HEIGHT - circle.getRadius() * 2;
-			velocity.y *= -dampingFactor;
+			velocity.y *= -retention;
+		}
+
+		if (position.x + circle.getRadius() * 2 >= WINDOW_WIDTH)
+		{
+			position.x = WINDOW_WIDTH - circle.getRadius() * 2;
+			velocity.x = -velocity.x;
+		}
+		else if (position.x <= 0)
+		{
+			position.x = 0;
+			velocity.x = -velocity.x;
 		}
 
 		circle.setPosition(position);
+	}
+	else
+	{
+		velocity = sf::Vector2f();
 	}
 }
 
@@ -48,8 +65,9 @@ void Circle::onMousePressed(const sf::Vector2f& mousePosition)
 	}
 }
 
-void Circle::onMouseReleased()
+void Circle::onMouseReleased(const sf::Vector2f& momentum)
 {
+	if (isDragged) velocity = momentum;
 	isDragged = false;
 }
 

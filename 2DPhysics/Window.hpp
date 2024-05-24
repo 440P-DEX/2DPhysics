@@ -14,12 +14,13 @@
 class Window
 {
 private:
-    int cnt = 0;
 	sf::RenderWindow window;
+    std::vector<sf::Vector2f> mouseTrajectory;
 
     void handleEvents(const std::vector<std::unique_ptr<Circle>>&);
     void update();
     void render(const std::vector<std::unique_ptr<Circle>>&);
+    sf::Vector2f calculateMomentum();
 
 public:
     /*
