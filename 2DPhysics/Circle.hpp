@@ -16,14 +16,15 @@ private:
 	sf::CircleShape circle;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
+	bool isDragged = false;
 
 public:
 	/*
-	Constructs a circle with the specified radius, color, and position.
+		Construct a circle with the specified radius, color, and position.
 
-	@param radius: the radius of the circle.
-	@param color: the color of the circle.
-	@param initialPosition: the initial position of the circle
+		@param radius: the radius of the circle.
+		@param color: the color of the circle.
+		@param initialPosition: the initial position of the circle
 	*/
 	Circle(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
 
@@ -31,7 +32,7 @@ public:
 	~Circle();
 
 	/*
-		Initializes a circle with the specified radius, color, and position.
+		Initialize a circle with the specified radius, color, and position.
 
 		@param radius: the radius of the circle.
 		@param color: the color of the circle.
@@ -48,11 +49,37 @@ public:
 	void update();
 
 	/*
-		Gets the SFML circle shape object.
+		Get the SFML circle shape object.
 
 		@return: A const reference to the SFML circle shape object.
 	*/
 	const sf::CircleShape& getObj() const;
+
+	/*
+		Handle the mouse button pressed event.
+
+		@param mousePosition: The position of the mouse when the button is pressed.
+	*/
+	void onMousePressed(const sf::Vector2f& mousePosition);
+
+	/*
+		Handle the mouse button released event.
+	*/
+	void onMouseReleased();
+
+	/*
+		Handle the mouse moved event.
+
+		@param mousePosition: The current position of the mouse.
+	*/
+	void onMouseMoved(const sf::Vector2f& mousePosition);
+
+	/*
+		Check if the circle is being dragged.
+
+		@return Return true if the circle is being dragged, otherwise.
+	*/
+	bool isBeingDragged() const { return isDragged; }
 };
 
 #endif // !CIRCLE_HPP

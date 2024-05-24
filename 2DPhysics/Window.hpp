@@ -17,13 +17,13 @@ private:
     int cnt = 0;
 	sf::RenderWindow window;
 
-    void handleEvents();
+    void handleEvents(const std::vector<std::unique_ptr<Circle>>&);
     void update();
     void render(const std::vector<std::unique_ptr<Circle>>&);
 
 public:
     /*
-        Constructs a window with the specified width, height, and title.
+        Construct a window with the specified width, height, and title.
 
         @param width: The width of the window.
         @param height: The height of the window.

@@ -20,19 +20,44 @@ void Circle::init(float radius, const sf::Color& color, const sf::Vector2f& init
 
 void Circle::update()
 {
-	velocity.y += gravitationalAcceleration;
-	position += velocity;
-
-	if (position.y + circle.getRadius() * 2 >= WINDOW_HEIGHT)
+	if (!isDragged)
 	{
-		position.y = WINDOW_HEIGHT - circle.getRadius() * 2;
-		velocity.y *= -dampingFactor;
-	}
+		velocity.y += gravitationalAcceleration;
+		position += velocity;
 
-	circle.setPosition(position);
+		if (position.y + circle.getRadius() * 2 >= WINDOW_HEIGHT)
+		{
+			position.y = WINDOW_HEIGHT - circle.getRadius() * 2;
+			velocity.y *= -dampingFactor;
+		}
+
+		circle.setPosition(position);
+	}
 }
 
 const sf::CircleShape& Circle::getObj() const
 {
 	return circle;
+}
+
+void Circle::onMousePressed(const sf::Vector2f& mousePosition)
+{
+	if (circle.getGlobalBounds().contains(mousePosition))
+	{
+		isDragged = true;
+	}
+}
+
+void Circle::onMouseReleased()
+{
+	isDragged = false;
+}
+
+void Circle::onMouseMoved(const sf::Vector2f& mousePosition)
+{
+	if (isDragged)
+	{
+		position = mousePosition - sf::Vector2f(circle.getRadius(), circle.getRadius());
+		circle.setPosition(position);
+	}
 }

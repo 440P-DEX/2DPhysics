@@ -10,7 +10,7 @@ Window::Window(unsigned width, unsigned height, const std::string& title, unsign
 Window::Window() = default;
 Window::~Window() = default;
 
-void Window::handleEvents()
+void Window::handleEvents(const std::vector<std::unique_ptr<Circle>>& circles)
 {
 	sf::Event event;
 
@@ -19,7 +19,7 @@ void Window::handleEvents()
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			std::cout << "Window closed.\n";
+			std::cout << "Window closed...!\n";
 			window.close();
 			break;
 
@@ -37,11 +37,27 @@ void Window::handleEvents()
 
 		case sf::Event::MouseButtonPressed:
 			if (event.mouseButton.button == sf::Mouse::Left)
-				std::cout << "Left mouse button was pressed at (" << event.mouseButton.x << ", " << event.mouseButton.y << ").\n";
-			else if (event.mouseButton.button == sf::Mouse::Right)
-				std::cout << "Right mouse button was pressed at (" << event.mouseButton.x << ", " << event.mouseButton.y << ").\n";
-			else if (event.mouseButton.button == sf::Mouse::Middle)
-				std::cout << "Middle mouse button was pressed at (" << event.mouseButton.x << ", " << event.mouseButton.y << ").\n";
+			{
+				for (const auto& circle : circles)
+				{
+					circle->onMousePressed(sf::Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)));
+					if (circle->isBeingDragged()) break;
+				}
+
+			}
+			break;
+
+		case sf::Event::MouseButtonReleased:
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				for (const auto& circle : circles)
+					circle->onMouseReleased();
+			}
+			break;
+
+		case sf::Event::MouseMoved:
+			for (const auto& circle : circles)
+				circle->onMouseMoved(sf::Vector2f(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y)));
 			break;
 
 		default:
@@ -69,7 +85,7 @@ void Window::render(const std::vector<std::unique_ptr<Circle>>& circles)
 
 void Window::run(const std::vector<std::unique_ptr<Circle>> &circles)
 {
-	Window::handleEvents();
+	Window::handleEvents(circles);
 	Window::update();
 	Window::render(circles);
 }
