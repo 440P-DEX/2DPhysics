@@ -111,8 +111,8 @@ void Window::render(const std::vector<std::unique_ptr<Circle>>& circles)
 
 void Window::run(const std::vector<std::unique_ptr<Circle>> &circles)
 {
-	Window::handleEvents(circles);
 	Window::update();
+	Window::handleEvents(circles);
 	Window::render(circles);
 }
 

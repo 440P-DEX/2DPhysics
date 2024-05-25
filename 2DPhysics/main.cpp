@@ -13,7 +13,7 @@
 	@param max: The maximum value of the range (inclusive).
 	@return A random float value within the specified range.
 */
-static float randomFloat(float min = 0.f, float max = 0.f)
+static float randomFloat(float min, float max)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -48,7 +48,7 @@ static unsigned int randomInt(unsigned int min, unsigned int max)
 static sf::Color randomColor()
 {
 	auto r = static_cast<sf::Uint8>(randomInt(0, 255));
-	auto g = static_cast<sf::Uint8> (randomInt(0, 255));
+	auto g = static_cast<sf::Uint8>(randomInt(0, 255));
 	auto b = static_cast<sf::Uint8>(randomInt(0, 255));
 	return sf::Color(r, g, b);
 }
