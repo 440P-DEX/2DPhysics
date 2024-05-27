@@ -1,3 +1,3 @@
-# Description
+# Project Overview
 
-This repository is created to store and develop an engine with basic Physics with SFML using C++.
+This repository hosts the development of a physics engine implemented in C++ and powered by SFML (Simple and Fast Multimedia Library). The project aims to create a robust and efficient engine capable of simulating basic physics principles.
