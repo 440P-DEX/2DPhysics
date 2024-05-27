@@ -21,9 +21,9 @@ public:
 	/*
 		Construct a circle with the specified radius, color, and position.
 
-		@param radius: the radius of the circle.
-		@param color: the color of the circle.
-		@param initialPosition: the initial position of the circle
+		@param radius: The radius of the circle.
+		@param color: The color of the circle.
+		@param initialPosition: The initial position of the circle
 	*/
 	Circle(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
 
@@ -33,9 +33,9 @@ public:
 	/*
 		Initialize a circle with the specified radius, color, and position.
 
-		@param radius: the radius of the circle.
-		@param color: the color of the circle.
-		@param position: the initial position of the circle
+		@param radius: The radius of the circle.
+		@param color: The color of the circle.
+		@param position: The initial position of the circle
 	*/
 	void init(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
 
@@ -46,13 +46,6 @@ public:
 		It adjusts the circle's position based on its velocity and the passage of time.
 	*/
 	void update();
-
-	/*
-		Get the SFML circle shape object.
-
-		@return: A const reference to the SFML circle shape object.
-	*/
-	const sf::CircleShape& getObj() const;
 
 	/*
 		Handle the mouse button pressed event.
