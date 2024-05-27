@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ProgrammingFeature\SFML\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\GameWithC++\SFML\2DPhysics\2DPhysics\include;D:\ProgrammingFeature\SFML\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,14 +131,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="source\Application.cpp" />
+    <ClCompile Include="source\Circle.cpp" />
+    <ClCompile Include="source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Circle.hpp" />
-    <ClInclude Include="Constants.hpp" />
-    <ClInclude Include="Window.hpp" />
+    <ClInclude Include="include\Application.hpp" />
+    <ClInclude Include="include\Circle.hpp" />
+    <ClInclude Include="include\Constants.hpp" />
+    <ClInclude Include="include\Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
