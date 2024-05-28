@@ -48,6 +48,13 @@ public:
 	void update();
 
 	/*
+		Get the SFML circle shape object.
+
+		@return: A const reference to the SFML circle shape object.
+	*/
+	const sf::CircleShape& getObj() const;
+
+	/*
 		Handle the mouse button pressed event.
 
 		@param mousePosition: The position of the mouse when the button is pressed.

@@ -52,6 +52,11 @@ void Circle::update()
 	}
 }
 
+const sf::CircleShape& Circle::getObj() const
+{
+	return circle;
+}
+
 void Circle::onMousePressed(const sf::Vector2f& mousePosition)
 {
 	if (circle.getGlobalBounds().contains(mousePosition))
