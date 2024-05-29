@@ -82,18 +82,31 @@ void Application::update()
 {
 	mouseTrajectory.push_back(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*window)));
 	if (mouseTrajectory.size() > 20) { mouseTrajectory.erase(mouseTrajectory.begin()); }
+
+	for (size_t i = 0; i < circles.size(); ++i)
+	{
+		for (size_t j = i + 1; j < circles.size(); ++j)
+		{
+			if (circles[i]->isColliding(*circles[j]))
+			{
+				std::cout << "Collision detected between circle " << i << " and circle " << j << "\n";
+			}
+		}
+	}
 }
 
 void Application::render()
 {
 	window->clear();
 
-	for (const auto& circle : circles)
-	{
-		window->draw(circle->getObj());
-	}
+	FORLOOPCIRCLE window->draw(circle->getObj());
 
 	window->display();
+}
+
+sf::Vector2u Application::getWindowSize()
+{
+	return window->getSize();
 }
 
 void Application::run()
@@ -132,8 +145,12 @@ void Application::initObject(int number, float radius)
 {
 	auto size = static_cast<sf::Vector2f>(window->getSize());
 
+	float radiusR;
+
 	for (int i = 0; i < number; ++i)
 	{
-		circles.push_back(std::make_unique<Circle>(radius, randomColor(), sf::Vector2f(randomFloat(radius, size.x - radius), randomFloat(radius, size.y - radius))));
+		if (radius == 0) radiusR = randomFloat(10.f, 100.f);
+		else radiusR = radius;
+		circles.push_back(std::make_unique<Circle>(radiusR, randomColor(), sf::Vector2f(randomFloat(radiusR, size.x + radiusR), randomFloat(radiusR, size.y + radiusR))));
 	}
 }

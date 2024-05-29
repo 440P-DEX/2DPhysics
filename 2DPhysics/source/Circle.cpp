@@ -1,23 +1,14 @@
 #include "Circle.hpp"
-#include "Constants.hpp"
 
-Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition) : circle(radius)
+Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition) : circle(radius), position(initialPosition)
 {
-	position = initialPosition - sf::Vector2f(radius, radius);
 	circle.setFillColor(color);
 	circle.setPosition(position);
+	circle.setOrigin(radius, radius);
 }
 
 Circle::Circle() = default;
 Circle::~Circle() = default;
-
-void Circle::init(float radius, const sf::Color& color, const sf::Vector2f& initialPosition)
-{
-	position = initialPosition - sf::Vector2f(radius, radius);
-	circle.setFillColor(color);
-	circle.setRadius(radius);
-	circle.setPosition(position);
-}
 
 void Circle::update()
 {
@@ -27,20 +18,23 @@ void Circle::update()
 		velocity.y += gravitationalAcceleration;
 		position += velocity;
 
-		if (position.y + circle.getRadius() * 2 >= WINDOW_HEIGHT)
+		float radius = circle.getRadius();
+		const auto size = static_cast<sf::Vector2f>(Application::Instance->getWindowSize());
+
+		if (position.y + radius >= size.y)
 		{
-			position.y = WINDOW_HEIGHT - circle.getRadius() * 2;
+			position.y = size.y - radius;
 			velocity.y *= -retention;
 		}
 
-		if (position.x + circle.getRadius() * 2 >= WINDOW_WIDTH)
+		if (position.x + radius >= size.x)
 		{
-			position.x = WINDOW_WIDTH - circle.getRadius() * 2;
+			position.x = size.x - radius;
 			velocity.x = -velocity.x;
 		}
-		else if (position.x <= 0)
+		else if (position.x - radius <= 0)
 		{
-			position.x = 0;
+			position.x = 0 + radius;
 			velocity.x = -velocity.x;
 		}
 
@@ -75,7 +69,17 @@ void Circle::onMouseMoved(const sf::Vector2f& mousePosition)
 {
 	if (isDragged)
 	{
-		position = mousePosition - sf::Vector2f(circle.getRadius(), circle.getRadius());
+		position = mousePosition;
 		circle.setPosition(position);
 	}
+}
+
+bool Circle::isColliding(const Circle& other) const
+{
+	float distanceX = this->position.x - other.position.x;
+	float distanceY = this->position.y - other.position.y;
+	float radiusSum = this->circle.getRadius() + other.circle.getRadius();
+	float distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+	return distanceSquared <= radiusSum * radiusSum;
 }
