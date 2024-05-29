@@ -7,6 +7,8 @@
 #include "Circle.hpp"
 #include "Utility.hpp"
 
+class Circle;
+
 /*
     A class representing a window for rendering 2D graphics.
 
@@ -84,22 +86,29 @@ public:
     ~Application();
 
     /*
+        Retrieves the size of the window.
+
+        @return A 2D vector containing the width and height of the window as unsigned int values.
+    */
+    sf::Vector2u getWindowSize();
+
+    /*
         Initialize a window with the specified width, height, and title.
 
         @param width: The width of the window.
         @param height: The height of the window.
         @param title: The title of the window displayed in the title bar.
         @param limit: The limit of the window's frames per second (default is 60).
-        @param number: The number of circles to initialize.
-        @param radius: The radius of the circles to initialize.
+        @param number: The number of objects to initialize.
+        @param radius: The radius of the objects to initialize.
     */
     void init(unsigned width, unsigned height, const std::string& title, int number, float radius, unsigned limit = 60);
 
     /*
-        Run the window and render the circles.
+        Run the window and render the objects.
 
         @param circles: A constant reference to a vector of unique pointers to Circle objects.
-                       These circles will be rendered on the window.
+                       These objects will be rendered on the window.
     */
     void run();
 };

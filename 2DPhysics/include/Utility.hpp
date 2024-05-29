@@ -2,6 +2,7 @@
 #define UTILITY_HPP
 
 #include <SFML/Graphics.hpp>
+#include <random>
 
 /*
 	Generates a random float value within the specified range [min, max].

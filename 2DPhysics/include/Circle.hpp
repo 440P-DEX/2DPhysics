@@ -2,6 +2,8 @@
 #define CIRCLE_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Constants.hpp"
+#include "Application.hpp"
 
 /*
 	A class representing a 2D circle with basic physics.
@@ -19,11 +21,11 @@ private:
 
 public:
 	/*
-		Construct a circle with the specified radius, color, and position.
+		Construct an object with the specified radius, color, and position.
 
-		@param radius: The radius of the circle.
-		@param color: The color of the circle.
-		@param initialPosition: The initial position of the circle
+		@param radius: The radius of the object.
+		@param color: The color of the object.
+		@param initialPosition: The initial position of the object.
 	*/
 	Circle(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
 
@@ -31,19 +33,10 @@ public:
 	~Circle();
 
 	/*
-		Initialize a circle with the specified radius, color, and position.
+		Update the position of the object using basic physics calculations.
 
-		@param radius: The radius of the circle.
-		@param color: The color of the circle.
-		@param position: The initial position of the circle
-	*/
-	void init(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
-
-	/*
-		Update the position of the circle using basic physics calculations.
-
-		This method applies basic physics principles to update the position of the circle.
-		It adjusts the circle's position based on its velocity and the passage of time.
+		This method applies basic physics principles to update the position of the object.
+		It adjusts the object's position based on its velocity and the passage of time.
 	*/
 	void update();
 
@@ -64,7 +57,7 @@ public:
 	/*
 		Handle the mouse button released event.
 
-		@param momentum: The momentum of the circle after being thrown.
+		@param momentum: The momentum of the object after being thrown.
 	*/
 	void onMouseReleased(const sf::Vector2f& momentum);
 
@@ -78,9 +71,16 @@ public:
 	/*
 		Check if the circle is being dragged.
 
-		@return Return true if the circle is being dragged, otherwise.
+		@return Return true if the object is being dragged, otherwise.
 	*/
 	bool isBeingDragged() const { return isDragged; }
+
+	/* 
+		Check if the object collides other objects.
+
+		@return Return true if the object.
+	*/
+	bool isColliding(const Circle& other) const;
 };
 
 #endif // !CIRCLE_HPP
