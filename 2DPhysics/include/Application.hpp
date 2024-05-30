@@ -76,10 +76,8 @@ private:
     void initObject(int number, float radius);
 
 public:
-    /*
-        Singleton instance of the Application class.
-        Allows access to a single instance of the Application class globally.
-    */
+    // Singleton instance of the Application class
+    // Allows access to a single instance of the Application class globally.
     static std::unique_ptr<Application> Instance;
 
     Application();
@@ -90,7 +88,7 @@ public:
 
         @return A 2D vector containing the width and height of the window as unsigned int values.
     */
-    sf::Vector2u getWindowSize();
+    sf::Vector2u getWindowSize() const;
 
     /*
         Initialize a window with the specified width, height, and title.
