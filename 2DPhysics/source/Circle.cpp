@@ -2,6 +2,7 @@
 
 Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition) : circle(radius), position(initialPosition)
 {
+	mass = radius * density;
 	circle.setFillColor(color);
 	circle.setPosition(position);
 	circle.setOrigin(radius, radius);
@@ -82,4 +83,32 @@ bool Circle::isColliding(const Circle& other) const
 	float distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
 	return distanceSquared <= radiusSum * radiusSum;
+}
+
+void Circle::onCollision(Circle& other)
+{
+	sf::Vector2f relativeVelocity = other.velocity - this->velocity;
+
+	sf::Vector2f normal = other.position - this->position;
+	float distance = std::sqrt(normal.x * normal.x + normal.y * normal.y);
+
+	if (distance != 0.0f)
+	{
+		normal /= distance;
+
+		float velocityAlongNormal = relativeVelocity.x * normal.x + relativeVelocity.y * normal.y;
+
+		if (velocityAlongNormal > 0) return;
+
+		// Calculate impulse scalar
+		float impulseScalar = -(1 + restitution) * velocityAlongNormal;
+		impulseScalar /= (1 / this->mass + 1 / other.mass);  // Adjust for different masses
+
+		// Calculate impulse
+		sf::Vector2f impulse = impulseScalar * normal;
+
+		// Apply impulse to both circles' velocities
+		this->velocity -= impulse / this->mass;
+		other.velocity += impulse / other.mass;
+	}
 }
