@@ -4,5 +4,5 @@ This repository hosts the development of a physics engine implemented in C++ and
 
 # Note that
 
-I am actaully new to game development, so my code could be a garbage... If you got any feedback for improvement, I would appreciate that!   
-I am also new to Github and I am now leaning how to use git properly.
+I am actaully new to game development, so my code could be a garbage... If you got any feedback for improvements, I would appreciate that!
+I am also new to Github and I am now learning how to use git properly.
