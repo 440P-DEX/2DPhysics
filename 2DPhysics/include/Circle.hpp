@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <memory>
 #include "Constants.hpp"
 #include "Application.hpp"
 
@@ -15,11 +16,10 @@
 class Circle
 {
 private:
-	sf::CircleShape circle;
+	std::unique_ptr<sf::CircleShape> circle;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	bool isDragged = false;
-	float mass;
 
 public:
 	/*

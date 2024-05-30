@@ -1,11 +1,11 @@
 #include "Circle.hpp"
 
-Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition) : circle(radius), position(initialPosition)
+Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition)
+	: circle(std::make_unique<sf::CircleShape>(radius)), position(initialPosition)
 {
-	mass = radius * density;
-	circle.setFillColor(color);
-	circle.setPosition(position);
-	circle.setOrigin(radius, radius);
+	circle->setFillColor(color);
+	circle->setPosition(position);
+	circle->setOrigin(radius, radius); 
 }
 
 Circle::Circle() = default;
@@ -19,7 +19,7 @@ void Circle::update()
 		velocity.y += gravitationalAcceleration;
 		position += velocity;
 
-		float radius = circle.getRadius();
+		float radius = circle->getRadius();
 		const auto size = static_cast<sf::Vector2f>(Application::Instance->getWindowSize());
 
 		if (position.y + radius >= size.y)
@@ -39,7 +39,7 @@ void Circle::update()
 			velocity.x = -velocity.x;
 		}
 
-		circle.setPosition(position);
+		circle->setPosition(position);
 	}
 	else
 	{
@@ -49,12 +49,12 @@ void Circle::update()
 
 const sf::CircleShape& Circle::getObj() const
 {
-	return circle;
+	return *circle;
 }
 
 void Circle::onMousePressed(const sf::Vector2f& mousePosition)
 {
-	if (circle.getGlobalBounds().contains(mousePosition))
+	if (circle->getGlobalBounds().contains(mousePosition))
 	{
 		isDragged = true;
 	}
@@ -71,7 +71,7 @@ void Circle::onMouseMoved(const sf::Vector2f& mousePosition)
 	if (isDragged)
 	{
 		position = mousePosition;
-		circle.setPosition(position);
+		circle->setPosition(position);
 	}
 }
 
@@ -79,7 +79,7 @@ bool Circle::isColliding(const Circle& other) const
 {
 	float distanceX = this->position.x - other.position.x;
 	float distanceY = this->position.y - other.position.y;
-	float radiusSum = this->circle.getRadius() + other.circle.getRadius();
+	float radiusSum = this->circle->getRadius() + other.circle->getRadius();
 	float distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
 	return distanceSquared <= radiusSum * radiusSum;
@@ -100,15 +100,15 @@ void Circle::onCollision(Circle& other)
 
 		if (velocityAlongNormal > 0) return;
 
-		// Calculate impulse scalar
-		float impulseScalar = -(1 + restitution) * velocityAlongNormal;
-		impulseScalar /= (1 / this->mass + 1 / other.mass);  // Adjust for different masses
+		float rad1 = this->circle->getRadius();
+		float rad2 = other.circle->getRadius();
 
-		// Calculate impulse
+		float impulseScalar = -(1 + restitution) * velocityAlongNormal;
+		impulseScalar /= (1 / rad1 + 1 / rad2);
+
 		sf::Vector2f impulse = impulseScalar * normal;
 
-		// Apply impulse to both circles' velocities
-		this->velocity -= impulse / this->mass;
-		other.velocity += impulse / other.mass;
+		this->velocity -= impulse / rad1;
+		other.velocity += impulse / rad2;
 	}
 }
