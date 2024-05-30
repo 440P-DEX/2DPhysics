@@ -33,7 +33,4 @@ constexpr float friction = 0.99f;
 // Perfectly elastic collision.
 constexpr float restitution = 1.0F;
 
-// volumetric mass density or specific mass of the circle
-constexpr float density = 1.0F;
-
 #endif // !CONSTANTS_HPP
