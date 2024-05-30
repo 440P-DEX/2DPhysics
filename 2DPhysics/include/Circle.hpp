@@ -2,6 +2,7 @@
 #define CIRCLE_HPP
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "Constants.hpp"
 #include "Application.hpp"
 
@@ -18,6 +19,7 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	bool isDragged = false;
+	float mass;
 
 public:
 	/*
@@ -81,6 +83,13 @@ public:
 		@return Return true if the object.
 	*/
 	bool isColliding(const Circle& other) const;
+
+	/*
+		Handle the collision and update the object's velocity to bounce off.
+
+		@param other: The velocity vector of the other object involved in the collision.
+	*/
+	void onCollision(Circle& other);
 };
 
 #endif // !CIRCLE_HPP
