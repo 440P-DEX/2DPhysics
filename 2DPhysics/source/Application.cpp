@@ -89,7 +89,7 @@ void Application::update()
 		{
 			if (circles[i]->isColliding(*circles[j]))
 			{
-				std::cout << "Collision detected between circle " << i << " and circle " << j << "\n";
+				circles[i]->onCollision(*circles[j]);
 			}
 		}
 	}
@@ -104,7 +104,7 @@ void Application::render()
 	window->display();
 }
 
-sf::Vector2u Application::getWindowSize()
+sf::Vector2u Application::getWindowSize() const
 {
 	return window->getSize();
 }
