@@ -7,12 +7,9 @@
 #include "Constants.hpp"
 #include "Application.hpp"
 
-/*
-	A class representing a 2D circle with basic physics.
-
-	This class encapsulates a circle shape, its position, and its velocity,
-	allowing it to be initialized, updated with basic physics, and rendered.
-*/
+// A class representing a 2D circle with basic physics.
+// This class encapsulates a circle shape, its position, and its velocity,
+// allowing it to be initialized, updated with basic physics, and rendered.
 class Circle
 {
 private:
@@ -34,12 +31,9 @@ public:
 	Circle();
 	~Circle();
 
-	/*
-		Update the position of the object using basic physics calculations.
-
-		This method applies basic physics principles to update the position of the object.
-		It adjusts the object's position based on its velocity and the passage of time.
-	*/
+	// Update the position of the object using basic physics calculations.
+	// This method applies basic physics principles to update the position of the object.
+	// It adjusts the object's position based on its velocity and the passage of time.
 	void update();
 
 	/*

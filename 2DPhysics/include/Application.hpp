@@ -9,52 +9,36 @@
 
 class Circle;
 
-/*
-	A class representing a window for rendering 2D graphics.
-
-	This class manages an SFML window, handles events, updates the state,
-	and renders a collection of Circle objects.
-*/
+// A class representing a window for rendering 2D graphics.
+// This class manages an SFML window, handles events, updates the state, and renders a collection of Circle objects.
 class Application
 {
 private:
 	//  Vector to store unique pointers to Circle objects.
 	std::vector<std::unique_ptr<Circle>> circles;
 
-	/*
-		Unique pointer to SFML RenderWindow object.
-		Manages the lifetime of the window.
-	*/
+	// Unique pointer to SFML RenderWindow object.
+	// Manages the lifetime of the window.
 	std::unique_ptr<sf::RenderWindow> window;
 
-	/*
-		Vector to store mouse trajectory points.
-		Useful for tracking mouse movement over time.
-	*/
+	// Vector to store mouse trajectory points.
+	// Useful for tracking mouse movement over time.
 	std::vector<sf::Vector2f> mouseTrajectory;
 
-	/*
-		Method to handle SFML events.
-		Processes incoming events and updates application state.
-	*/
+	// Method to handle SFML events.
+	// Processes incoming events and updates application state.
 	void handleEvents();
 
-	/*
-		Method to update application state.
-		Updates positions, properties, or other game logic tasks.
-	*/
+	// Method to update application state.
+	// Updates positions, properties, or other game logic tasks.
 	void update();
 
-	/*
-		Method to render graphics to the SFML RenderWindow.
-		Draws objects, backgrounds, UI elements, etc.
-	*/
+	// Method to render graphics to the SFML RenderWindow.
+	// Draws objects, backgrounds, UI elements, etc.
 	void render();
 
-	/*
-		Method to calculate momentum based on mouse trajectory.
-		Uses stored points to determine mouse movement speed and direction.
-	*/
+	// Method to calculate momentum based on mouse trajectory.
+	// Uses stored points to determine mouse movement speed and direction.
 	sf::Vector2f calculateMomentum();
 
 	/*
@@ -106,7 +90,7 @@ public:
 		Run the window and render the objects.
 
 		@param circles: A constant reference to a vector of unique pointers to Circle objects.
-					   These objects will be rendered on the window.
+						These objects will be rendered on the window.
 	*/
 	void run();
 };
