@@ -57,7 +57,6 @@ void Application::handleEvents()
 					circle->onMousePressed(sf::Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)));
 					if (circle->isBeingDragged()) break;
 				}
-
 			}
 			break;
 
