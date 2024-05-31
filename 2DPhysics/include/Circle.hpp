@@ -77,7 +77,7 @@ public:
 	*/
 	bool isBeingDragged() const { return isDragged; }
 
-	/* 
+	/*
 		Check if the object collides other objects.
 
 		@return Return true if the object.
@@ -85,7 +85,7 @@ public:
 	bool isColliding(const Circle& other) const;
 
 	/*
-		Handle the collision and update the object's velocity to bounce off.
+		Handle the collision and update the object's velocity to bounce off (INCOMPLETE FUNCTION).
 
 		@param other: The velocity vector of the other object involved in the collision.
 	*/

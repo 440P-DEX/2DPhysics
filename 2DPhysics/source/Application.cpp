@@ -36,7 +36,7 @@ void Application::handleEvents()
 		case sf::Event::GainedFocus:
 			std::cout << "Window gained focus.\n";
 			break;
-		
+
 		case sf::Event::LostFocus:
 			std::cout << "Window lost focus.\n";
 			break;

@@ -5,7 +5,7 @@ Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initial
 {
 	circle->setFillColor(color);
 	circle->setPosition(position);
-	circle->setOrigin(radius, radius); 
+	circle->setOrigin(radius, radius);
 }
 
 Circle::Circle() = default;
