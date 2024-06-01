@@ -82,7 +82,7 @@ public:
 	bool isColliding(const Circle& other) const;
 
 	/*
-		Handle the collision and update the object's velocity to bounce off (INCOMPLETE FUNCTION).
+		Handle the collision and update the object's velocity to bounce off.
 
 		@param other: The velocity vector of the other object involved in the collision.
 	*/
