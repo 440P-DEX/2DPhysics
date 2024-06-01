@@ -13,8 +13,8 @@ sf::Vector2f Application::calculateMomentum()
 
 	if (mouseTrajectory.size() > 10)
 	{
-		velocity.x = (mouseTrajectory[mouseTrajectory.size() - 1].x - mouseTrajectory.front().x) / static_cast<float>(mouseTrajectory.size()) * 2;
-		velocity.y = (mouseTrajectory[mouseTrajectory.size() - 1].y - mouseTrajectory.front().y) / static_cast<float>(mouseTrajectory.size()) * 2;
+		velocity.x = (mouseTrajectory.back().x - mouseTrajectory.front().x) / static_cast<float>(mouseTrajectory.size()) * 100;
+		velocity.y = (mouseTrajectory.back().y - mouseTrajectory.front().y) / static_cast<float>(mouseTrajectory.size()) * 100;
 	}
 
 	return velocity;
@@ -63,7 +63,8 @@ void Application::handleEvents()
 		case sf::Event::MouseButtonReleased:
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				FORLOOPCIRCLE circle->onMouseReleased(calculateMomentum());
+				sf::Vector2f momentum = calculateMomentum();
+				FORLOOPCIRCLE circle->onMouseReleased(momentum);
 			}
 			break;
 
