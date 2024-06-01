@@ -1,6 +1,6 @@
 /*
-This is the header for constants, you can change value here.
-Also it is recommended to change value here.
+	This is the header for constants, you can change value here.
+	You can also change it directly in main.cpp.
 */
 
 #ifndef CONSTANTS_HPP
@@ -10,7 +10,7 @@ Also it is recommended to change value here.
 constexpr float RADIUS = 50.0F;
 
 // The frame rate limit.
-constexpr unsigned FPS = 60;
+constexpr unsigned FPS = 144U;
 
 // The number of the Circle objects to generate.
 constexpr unsigned OBJECTS = 5U;
@@ -22,15 +22,15 @@ constexpr unsigned WINDOW_WIDTH = 800U;
 constexpr unsigned WINDOW_HEIGHT = 600U;
 
 // Average gravitational acceleration.
-constexpr float gravitationalAcceleration = 0.98f;
+constexpr float gravitationalAcceleration = 58.8F;
 
 // Retention for reducing bouncing.
-constexpr float retention = 0.8f;
+constexpr float retention = 0.8F;
 
 // Friction for reducing horizontally moving.
-constexpr float friction = 0.99f;
+constexpr float friction = 0.99F;
 
-// Perfectly elastic collision.
-constexpr float restitution = 1.0F;
+// 95% of the collision velocity.
+constexpr float restitution = 0.95F;
 
 #endif // !CONSTANTS_HPP
