@@ -1,7 +1,7 @@
 #include "Circle.hpp"
 
 Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition)
-	: circle(std::make_unique<sf::CircleShape>(radius)), position(initialPosition)
+	: circle(std::make_unique<sf::CircleShape>(radius)), position(initialPosition), mass(radius* radius* radius)
 {
 	circle->setFillColor(color);
 	circle->setPosition(position);
@@ -13,11 +13,13 @@ Circle::~Circle() = default;
 
 void Circle::update()
 {
+	deltaTime = clock.restart().asSeconds();
+
 	if (!isDragged)
 	{
 		velocity.x *= friction;
 		velocity.y += gravitationalAcceleration;
-		position += velocity;
+		position += velocity * deltaTime;
 
 		float radius = circle->getRadius();
 		const auto size = static_cast<sf::Vector2f>(Application::Instance->getWindowSize());
@@ -31,12 +33,12 @@ void Circle::update()
 		if (position.x + radius >= size.x)
 		{
 			position.x = size.x - radius;
-			velocity.x = -velocity.x;
+			velocity.x *= -retention;
 		}
 		else if (position.x - radius <= 0)
 		{
 			position.x = 0 + radius;
-			velocity.x = -velocity.x;
+			velocity.x *= -retention;
 		}
 
 		circle->setPosition(position);
@@ -62,7 +64,7 @@ void Circle::onMousePressed(const sf::Vector2f& mousePosition)
 
 void Circle::onMouseReleased(const sf::Vector2f& momentum)
 {
-	if (isDragged) velocity = momentum;
+	if (isDragged) { velocity = momentum; }
 	isDragged = false;
 }
 
@@ -92,23 +94,31 @@ void Circle::onCollision(Circle& other)
 	sf::Vector2f normal = other.position - this->position;
 	float distance = std::sqrt(normal.x * normal.x + normal.y * normal.y);
 
-	if (distance != 0.0f)
+	if (distance == 0.0F)
 	{
-		normal /= distance;
-
-		float velocityAlongNormal = relativeVelocity.x * normal.x + relativeVelocity.y * normal.y;
-
-		if (velocityAlongNormal > 0) return;
-
-		float rad1 = this->circle->getRadius();
-		float rad2 = other.circle->getRadius();
-
-		float impulseScalar = -(1 + restitution) * velocityAlongNormal;
-		impulseScalar /= (1 / rad1 + 1 / rad2);
-
-		sf::Vector2f impulse = impulseScalar * normal;
-
-		this->velocity -= impulse / rad1;
-		other.velocity += impulse / rad2;
+		normal = sf::Vector2f(1.0F, 1.0F);
+		distance = 1.0F;
 	}
+
+	float overlap = this->circle->getRadius() + other.circle->getRadius() - distance;
+
+	normal /= distance;
+
+	float velocityAlongNormal = relativeVelocity.x * normal.x + relativeVelocity.y * normal.y;
+
+	this->position -= normal * (overlap / 2.0F);
+	other.position += normal * (overlap / 2.0F);
+
+	if (velocityAlongNormal > 0) return;
+
+	float m1 = this->mass;
+	float m2 = other.mass;
+
+	float impulseScalar = -(1 + restitution) * velocityAlongNormal;
+	impulseScalar /= (1 / m1 + 1 / m2);
+
+	sf::Vector2f impulse = impulseScalar * normal;
+
+	this->velocity -= impulse / m1;
+	other.velocity += impulse / m2;
 }
