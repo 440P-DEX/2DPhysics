@@ -16,6 +16,9 @@ private:
 	std::unique_ptr<sf::CircleShape> circle;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
+	sf::Clock clock;
+	float mass;
+	float deltaTime = 0.0F;
 	bool isDragged = false;
 
 public:
