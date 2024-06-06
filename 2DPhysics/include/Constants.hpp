@@ -9,7 +9,7 @@
 // Radius of the circles.
 constexpr float RADIUS = 50.0F;
 
-// The frame rate limit.
+// The frame rate limit (Recommendation: Over 120 FPS).
 constexpr unsigned FPS = 144U;
 
 // The number of the Circle objects to generate.
