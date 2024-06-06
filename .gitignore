@@ -362,9 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /2DPhysics/2DPhysics.vcxproj
-/2DPhysics/include/SFML
 /2DPhysics/2DPhysics.vcxproj.filters
-/.gitignore
-/.gitignore
-/.gitignore
 /2DPhysics.sln
