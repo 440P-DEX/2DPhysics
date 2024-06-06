@@ -142,12 +142,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Application.cpp" />
     <ClCompile Include="source\Circle.cpp" />
+    <ClCompile Include="source\Quadtree.cpp" />
     <ClCompile Include="source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.hpp" />
     <ClInclude Include="include\Circle.hpp" />
     <ClInclude Include="include\Constants.hpp" />
+    <ClInclude Include="include\Quadtree.hpp" />
     <ClInclude Include="include\Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
