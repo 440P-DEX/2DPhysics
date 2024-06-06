@@ -1,6 +1,6 @@
 #include "Application.hpp"
 
-#define FORLOOPCIRCLE for (const auto& circle : circles)
+#define FORLOOP(value, target) for (const auto& value : target)
 
 std::unique_ptr<Application> Application::Instance = std::make_unique<Application>();
 
@@ -13,8 +13,8 @@ sf::Vector2f Application::calculateMomentum()
 
 	if (mouseTrajectory.size() > 10)
 	{
-		velocity.x = (mouseTrajectory.back().x - mouseTrajectory.front().x) / static_cast<float>(mouseTrajectory.size()) * 100;
-		velocity.y = (mouseTrajectory.back().y - mouseTrajectory.front().y) / static_cast<float>(mouseTrajectory.size()) * 100;
+		velocity.x = (mouseTrajectory.back().x - mouseTrajectory.front().x) / static_cast<float>(mouseTrajectory.size()) * 150;
+		velocity.y = (mouseTrajectory.back().y - mouseTrajectory.front().y) / static_cast<float>(mouseTrajectory.size()) * 150;
 	}
 
 	return velocity;
@@ -52,7 +52,7 @@ void Application::handleEvents()
 		case sf::Event::MouseButtonPressed:
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				FORLOOPCIRCLE
+				FORLOOP(circle, circles)
 				{
 					circle->onMousePressed(sf::Vector2f(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)));
 					if (circle->isBeingDragged()) break;
@@ -64,12 +64,12 @@ void Application::handleEvents()
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2f momentum = calculateMomentum();
-				FORLOOPCIRCLE circle->onMouseReleased(momentum);
+				FORLOOP(circle, circles) circle->onMouseReleased(momentum);
 			}
 			break;
 
 		case sf::Event::MouseMoved:
-			FORLOOPCIRCLE circle->onMouseMoved(sf::Vector2f(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y)));
+			FORLOOP(circle, circles) circle->onMouseMoved(sf::Vector2f(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y)));
 			break;
 
 		default:
@@ -83,13 +83,28 @@ void Application::update()
 	mouseTrajectory.push_back(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*window)));
 	if (mouseTrajectory.size() > 20) { mouseTrajectory.erase(mouseTrajectory.begin()); }
 
-	for (size_t i = 0; i < circles.size(); ++i)
+	quadtree->clear();
+
+	FORLOOP(circle, circles)
 	{
-		for (size_t j = i + 1; j < circles.size(); ++j)
+		circle->update();
+		quadtree->insert(circle.get());
+	}
+
+	handleCollisions();
+}
+
+void Application::handleCollisions() const
+{
+	for (const auto& circle : circles)
+	{
+		std::vector<Circle*> potentialCollisions = quadtree->retrieve(circle->getObj());
+
+		for (auto candidate : potentialCollisions)
 		{
-			if (circles[i]->isColliding(*circles[j]))
+			if (circle->isColliding(*candidate))
 			{
-				circles[i]->onCollision(*circles[j]);
+				circle->onCollision(*candidate);
 			}
 		}
 	}
@@ -99,22 +114,15 @@ void Application::render()
 {
 	window->clear();
 
-	FORLOOPCIRCLE window->draw(circle->getObj());
+	FORLOOP(circle, circles) window->draw(circle->getObj());
 
 	window->display();
-}
-
-sf::Vector2u Application::getWindowSize() const
-{
-	return window->getSize();
 }
 
 void Application::run()
 {
 	while (window->isOpen())
 	{
-		FORLOOPCIRCLE circle->update();
-
 		Application::update();
 		Application::handleEvents();
 		Application::render();
@@ -123,6 +131,8 @@ void Application::run()
 
 void Application::init(unsigned width, unsigned height, const std::string& title, int number, float radius, unsigned limit)
 {
+	quadtree = std::make_unique<Quadtree>(0, sf::FloatRect(0, 0, static_cast<float>(width), static_cast<float>(height)));
+
 	initWindow(width, height, title, limit);
 	initObject(number, radius);
 
@@ -151,6 +161,6 @@ void Application::initObject(int number, float radius)
 	{
 		if (radius == 0) radiusR = randomFloat(10.f, 100.f);
 		else radiusR = radius;
-		circles.push_back(std::make_unique<Circle>(radiusR, randomColor(), sf::Vector2f(randomFloat(radiusR, size.x + radiusR), randomFloat(radiusR, size.y + radiusR))));
+		circles.push_back(std::make_unique<Circle>(radiusR, randomColor(), sf::Vector2f(randomFloat(radiusR, size.x + radiusR), randomFloat(radiusR, size.y + radiusR)), window->getSize()));
 	}
 }

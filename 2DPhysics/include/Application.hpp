@@ -6,39 +6,41 @@
 #include <memory>
 #include "Circle.hpp"
 #include "Utility.hpp"
+#include "Quadtree.hpp"
 
 class Circle;
+class Quadtree;
 
 // A class representing a window for rendering 2D graphics.
 // This class manages an SFML window, handles events, updates the state, and renders a collection of Circle objects.
 class Application
 {
 private:
-	//  Vector to store unique pointers to Circle objects.
-	std::vector<std::unique_ptr<Circle>> circles;
+	// Accessors
+	std::vector<std::unique_ptr<Circle>>	circles;			// Vector to store unique pointers to Circle objects.
+	std::unique_ptr<sf::RenderWindow>		window;				// Unique pointer to SFML RenderWindow object. Manages the lifetime of the window.
+	std::unique_ptr<Quadtree>				quadtree;			// Represent a quadtree data structure used for spatial partitioning.
+	std::vector<sf::Vector2f>				mouseTrajectory;	// Vector to store mouse trajectory points.
 
-	// Unique pointer to SFML RenderWindow object.
-	// Manages the lifetime of the window.
-	std::unique_ptr<sf::RenderWindow> window;
+	// Method
 
-	// Vector to store mouse trajectory points.
-	// Useful for tracking mouse movement over time.
-	std::vector<sf::Vector2f> mouseTrajectory;
+	// Handle collision, detecting collisions, respond to collisions.
+	void handleCollisions() const;
 
 	// Method to handle SFML events.
-	// Processes incoming events and updates application state.
+	// Process incoming events and updates application state.
 	void handleEvents();
 
 	// Method to update application state.
-	// Updates positions, properties, or other game logic tasks.
+	// Update positions, properties, or other game logic tasks.
 	void update();
 
 	// Method to render graphics to the SFML RenderWindow.
-	// Draws objects, backgrounds, UI elements, etc.
+	// Draw objects, backgrounds, UI elements, etc.
 	void render();
 
 	// Method to calculate momentum based on mouse trajectory.
-	// Uses stored points to determine mouse movement speed and direction.
+	// Use stored points to determine mouse movement speed and direction.
 	sf::Vector2f calculateMomentum();
 
 	/*
@@ -61,18 +63,11 @@ private:
 
 public:
 	// Singleton instance of the Application class
-	// Allows access to a single instance of the Application class globally.
+	// Allow access to a single instance of the Application class globally.
 	static std::unique_ptr<Application> Instance;
 
 	Application();
 	~Application();
-
-	/*
-		Retrieves the size of the window.
-
-		@return A 2D vector containing the width and height of the window as unsigned int values.
-	*/
-	sf::Vector2u getWindowSize() const;
 
 	/*
 		Initialize a window with the specified width, height, and title.

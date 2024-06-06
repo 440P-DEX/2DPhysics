@@ -13,13 +13,15 @@
 class Circle
 {
 private:
-	std::unique_ptr<sf::CircleShape> circle;
-	sf::Vector2f position;
-	sf::Vector2f velocity;
-	sf::Clock clock;
-	float mass;
-	float deltaTime = 0.0F;
-	bool isDragged = false;
+	// Accessors
+	std::unique_ptr<sf::CircleShape>	circle;				// Unique pointer to the CircleShape object.
+	sf::Vector2f						windowSize;			// The window size.
+	sf::Vector2f						position;			// The position of the circle.
+	sf::Vector2f						velocity;			// The velocity of the circle.
+	sf::Clock							clock;				// The clock, used to adjust FPS.
+	float								deltaTime = 0.0F;	// The time delta.
+	float								mass = 0.0F;		// The mass of the circle object.
+	bool								isDragged = false;	// The state of being dragged of the circle.
 
 public:
 	/*
@@ -29,7 +31,7 @@ public:
 		@param color: The color of the object.
 		@param initialPosition: The initial position of the object.
 	*/
-	Circle(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition);
+	Circle(float radius, const sf::Color& corlor, const sf::Vector2f& initialPosition, const sf::Vector2u& size);
 
 	Circle();
 	~Circle();
@@ -45,6 +47,8 @@ public:
 		@return: A const reference to the SFML circle shape object.
 	*/
 	const sf::CircleShape& getObj() const;
+
+	sf::FloatRect getBounds() const;
 
 	/*
 		Handle the mouse button pressed event.
@@ -77,7 +81,7 @@ public:
 	/*
 		Check if the object collides other objects.
 
-		@return Return true if the object.
+		@param other: The other object involved in the collision.
 	*/
 	bool isColliding(const Circle& other) const;
 

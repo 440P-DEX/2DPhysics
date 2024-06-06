@@ -1,7 +1,7 @@
 #include "Circle.hpp"
 
-Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition)
-	: circle(std::make_unique<sf::CircleShape>(radius)), position(initialPosition), mass(radius* radius* radius)
+Circle::Circle(float radius, const sf::Color& color, const sf::Vector2f& initialPosition, const sf::Vector2u& size)
+	: circle(std::make_unique<sf::CircleShape>(radius)), windowSize(static_cast<sf::Vector2f>(size)), position(initialPosition), mass(radius* radius* radius)
 {
 	circle->setFillColor(color);
 	circle->setPosition(position);
@@ -22,17 +22,16 @@ void Circle::update()
 		position += velocity * deltaTime;
 
 		float radius = circle->getRadius();
-		const auto size = static_cast<sf::Vector2f>(Application::Instance->getWindowSize());
 
-		if (position.y + radius >= size.y)
+		if (position.y + radius >= windowSize.y)
 		{
-			position.y = size.y - radius;
+			position.y = windowSize.y - radius;
 			velocity.y *= -retention;
 		}
 
-		if (position.x + radius >= size.x)
+		if (position.x + radius >= windowSize.x)
 		{
-			position.x = size.x - radius;
+			position.x = windowSize.x - radius;
 			velocity.x *= -retention;
 		}
 		else if (position.x - radius <= 0)
@@ -52,6 +51,11 @@ void Circle::update()
 const sf::CircleShape& Circle::getObj() const
 {
 	return *circle;
+}
+
+sf::FloatRect Circle::getBounds() const
+{
+	return circle->getGlobalBounds();
 }
 
 void Circle::onMousePressed(const sf::Vector2f& mousePosition)

@@ -33,4 +33,10 @@ constexpr float friction = 0.99F;
 // 95% of the collision velocity.
 constexpr float restitution = 0.95F;
 
+// Max objects in each node.
+constexpr int MAX_OBJECTS = 4;
+
+// Max levels of each node.
+constexpr int MAX_LEVELS = 5;
+
 #endif // !CONSTANTS_HPP
