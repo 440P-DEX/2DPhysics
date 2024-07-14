@@ -81,12 +81,7 @@ public:
 	*/
 	void init(unsigned width, unsigned height, const std::string& title, int number, float radius, unsigned limit = 60);
 
-	/*
-		Run the window and render the objects.
-
-		@param circles: A constant reference to a vector of unique pointers to Circle objects.
-						These objects will be rendered on the window.
-	*/
+	// Run the window and render the objects.
 	void run();
 };
 
