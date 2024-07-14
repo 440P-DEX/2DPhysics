@@ -17,10 +17,10 @@ class Application
 {
 private:
 	// Accessors
-	std::vector<std::unique_ptr<Circle>>	circles;			// Vector to store unique pointers to Circle objects.
-	std::unique_ptr<sf::RenderWindow>		window;				// Unique pointer to SFML RenderWindow object. Manages the lifetime of the window.
-	std::unique_ptr<Quadtree>				quadtree;			// Represent a quadtree data structure used for spatial partitioning.
-	std::vector<sf::Vector2f>				mouseTrajectory;	// Vector to store mouse trajectory points.
+	std::vector<std::unique_ptr<Circle>>	circles;		// Vector to store unique pointers to Circle objects.
+	std::unique_ptr<sf::RenderWindow>	window;			// Unique pointer to SFML RenderWindow object. Manages the lifetime of the window.
+	std::unique_ptr<Quadtree>		quadtree;		// Represent a quadtree data structure used for spatial partitioning.
+	std::vector<sf::Vector2f>		mouseTrajectory;	// Vector to store mouse trajectory points.
 
 	// Method
 
