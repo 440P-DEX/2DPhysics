@@ -13,14 +13,14 @@ class Quadtree;
 
 // A class representing a window for rendering 2D graphics.
 // This class manages an SFML window, handles events, updates the state, and renders a collection of Circle objects.
-class Application
-{
+class Application {
 private:
 	// Accessors
 	std::vector<std::unique_ptr<Circle>>	circles;			// Vector to store unique pointers to Circle objects.
 	std::unique_ptr<sf::RenderWindow>		window;				// Unique pointer to SFML RenderWindow object. Manages the lifetime of the window.
 	std::unique_ptr<Quadtree>				quadtree;			// Represent a quadtree data structure used for spatial partitioning.
 	std::vector<sf::Vector2f>				mouseTrajectory;	// Vector to store mouse trajectory points.
+	bool									isRunning = false;	// Is the window gaining focus or not.
 
 	// Method
 
@@ -81,12 +81,7 @@ public:
 	*/
 	void init(unsigned width, unsigned height, const std::string& title, int number, float radius, unsigned limit = 60);
 
-	/*
-		Run the window and render the objects.
-
-		@param circles: A constant reference to a vector of unique pointers to Circle objects.
-						These objects will be rendered on the window.
-	*/
+	// Run the window.
 	void run();
 };
 

@@ -10,8 +10,7 @@
 // A class representing a 2D circle with basic physics.
 // This class encapsulates a circle shape, its position, and its velocity,
 // allowing it to be initialized, updated with basic physics, and rendered.
-class Circle
-{
+class Circle {
 private:
 	// Accessors
 	std::unique_ptr<sf::CircleShape>	circle;				// Unique pointer to the CircleShape object.

@@ -8,12 +8,10 @@
 
 class Circle;
 
-class Quadtree
-{
+class Quadtree {
 private:
 	// Nested class Node.
-	class Node
-	{
+	class Node {
 	public:
 		std::unique_ptr<Quadtree>	subtree;	// The subtree of each quadtree.
 		sf::FloatRect				bounds;		// The bounds of the node.
